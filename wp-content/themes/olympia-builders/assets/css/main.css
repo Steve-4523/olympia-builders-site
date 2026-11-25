@@ -2853,32 +2853,8 @@ body.admin-bar .site-header {
 
 
 /* ==========================================================================
-   19. PORTFOLIO ADDITIONS (project groups, rendering labels, galleries)
+   19. PORTFOLIO ADDITIONS (picture tags, galleries)
    ========================================================================== */
-
-.projects-group-title {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    margin: 0 0 1.2rem;
-    font-size: 0.76rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(245, 245, 240, 0.78);
-    font-family: var(--font-body);
-    font-weight: 500;
-}
-
-.projects-group-title::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, rgba(201, 178, 124, 0.5), transparent);
-}
-
-.projects-grid + .projects-group-title {
-    margin-top: 3.4rem;
-}
 
 .render-tag {
     display: inline-block;
@@ -2898,12 +2874,20 @@ body.admin-bar .site-header {
     pointer-events: none;
 }
 
-.project-card-image-wrapper .render-tag,
+.project-card-tags,
 .project-gallery-item .render-tag {
     position: absolute;
     top: 0.8rem;
     left: 0.8rem;
     z-index: 5;
+}
+
+.project-card-tags {
+    right: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    pointer-events: none;
 }
 
 .project-hero-text .render-tag {

@@ -26,9 +26,10 @@
             ensure(i + 1);
             ensure(i + 2);
             ensure(i - 1);
+            ensure(i - 2);
         }
 
-        new Swiper('.hero-swiper', {
+        var swiper = new Swiper('.hero-swiper', {
             effect: 'fade',
             fadeEffect: { crossFade: true },
             autoplay: {
@@ -37,6 +38,7 @@
             },
             loop: slideCount > 1,
             speed: 1000,
+            loopPreventsSliding: false,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
@@ -47,6 +49,18 @@
                 init: loadAround,
                 slideChange: loadAround,
             },
+        });
+
+        // Left and right arrow keys step through the pictures while the banner is on screen.
+        document.addEventListener('keydown', function(e) {
+            if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+            if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || slideCount < 2) return;
+            var t = e.target;
+            if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+            var box = heroSwiper.getBoundingClientRect();
+            if (box.bottom <= 0 || box.top >= window.innerHeight) return;
+            e.preventDefault();
+            if (e.key === 'ArrowRight') swiper.slideNext(450); else swiper.slidePrev(450);
         });
     });
 })();
