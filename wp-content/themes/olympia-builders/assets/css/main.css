@@ -2850,3 +2850,185 @@ body.admin-bar .site-header {
   flex: 1;
   padding-top: 80px;
 }
+
+
+/* ==========================================================================
+   19. PORTFOLIO ADDITIONS (project groups, rendering labels, galleries)
+   ========================================================================== */
+
+.projects-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin: 0 0 1.2rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245, 245, 240, 0.78);
+    font-family: var(--font-body);
+    font-weight: 500;
+}
+
+.projects-group-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(201, 178, 124, 0.5), transparent);
+}
+
+.projects-grid + .projects-group-title {
+    margin-top: 3.4rem;
+}
+
+.render-tag {
+    display: inline-block;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 178, 124, 0.55);
+    background: rgba(10, 10, 10, 0.62);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: #f5f5f0;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.project-card-image-wrapper .render-tag,
+.project-gallery-item .render-tag {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    z-index: 5;
+}
+
+.project-hero-text .render-tag {
+    margin-bottom: 0.7rem;
+}
+
+.project-gallery-item {
+    overflow: hidden;
+    border-radius: 18px;
+    background: #111;
+}
+
+.project-gallery-item:focus-visible {
+    outline: 2px solid #c9b27c;
+    outline-offset: 3px;
+}
+
+.project-gallery--single,
+.project-gallery--pair {
+    grid-template-columns: 1fr;
+}
+
+.project-gallery--single .project-gallery-item,
+.project-gallery--pair .project-gallery-item {
+    padding-bottom: 0;
+}
+
+.project-gallery--single .project-gallery-img,
+.project-gallery--pair .project-gallery-img {
+    position: static;
+    display: block;
+    height: auto;
+}
+
+.project-card-gradient {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.45) 30%, rgba(0, 0, 0, 0) 64%);
+}
+
+.project-card-meta {
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+}
+
+/* On tall screens the wide home-page photos are cropped to a strip: keep each one's subject in view */
+@media (orientation: portrait) {
+    .hero-slide-image {
+        object-position: var(--hero-x, 50%) 50%;
+    }
+}
+
+.project-narrative p + p {
+    margin-top: 0.9rem;
+}
+
+.lightbox-prev,
+.lightbox-next,
+.lightbox-close {
+    z-index: 2;
+}
+
+@media (min-width: 768px) {
+    .project-gallery--pair {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Phones: gallery pictures two across instead of three, so each one is large enough to read.
+   A set with an odd count opens with one wide picture, so the last row is never left half empty. */
+@media (max-width: 599px) {
+    .project-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+
+    .project-gallery--single,
+    .project-gallery--pair {
+        grid-template-columns: 1fr;
+    }
+
+    .project-gallery--lead .project-gallery-item:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 64%;
+    }
+}
+
+/* Phones zoom the whole page when a form field's text is smaller than 16px. Keep it at 16px so the page stays put. */
+@media (max-width: 767px) {
+    .wpcf7 input:not([type="submit"]),
+    .wpcf7 textarea,
+    .wpcf7 select {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .project-narrative,
+    .project-gallery,
+    .project-details-table,
+    .project-footer-nav,
+    .project-progress-bar-wrapper {
+        max-width: 1120px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .project-narrative {
+        padding-top: 3rem;
+        padding-bottom: 2.2rem;
+    }
+
+    .project-narrative p {
+        max-width: 46rem;
+        font-size: 1.08rem;
+    }
+
+    .project-gallery {
+        gap: 0.9rem;
+    }
+
+    .project-hero-text {
+        bottom: 44px;
+        left: max(20px, calc((100vw - 1120px) / 2 + 1rem));
+    }
+
+    .project-details-table,
+    .project-footer-nav {
+        margin-top: 2.4rem;
+    }
+}
