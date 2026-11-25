@@ -2988,6 +2988,28 @@ body.admin-bar .site-header {
     }
 }
 
+/* The line under the contact form that says whether an inquiry was sent */
+.form-note {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(201, 178, 124, 0.45);
+    background: rgba(201, 178, 124, 0.08);
+    color: #f5f5f0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.form-note--bad {
+    border-color: rgba(226, 122, 106, 0.7);
+    background: rgba(226, 122, 106, 0.1);
+}
+
+.wpcf7-response-output:empty {
+    display: none;
+}
+
 /* Phones zoom the whole page when a form field's text is smaller than 16px. Keep it at 16px so the page stays put. */
 @media (max-width: 767px) {
     .wpcf7 input:not([type="submit"]),
