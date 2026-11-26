@@ -2856,6 +2856,32 @@ body.admin-bar .site-header {
    19. PORTFOLIO ADDITIONS (picture tags, galleries)
    ========================================================================== */
 
+.logo-carousel-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
+}
+
+.logo-carousel-title {
+    font-size: 1.6rem;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
+.logo-carousel-subtitle {
+    font-size: 0.95rem;
+    color: #9a9a8f;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .logo-carousel-title { font-size: 2.1rem; }
+}
+
 .render-tag {
     display: inline-block;
     padding: 0.3rem 0.65rem;
