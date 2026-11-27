@@ -1,0 +1,59 @@
+name: Publish website
+
+# Sends the files in this repository to Cloudflare Pages (project "olympia-builders-site").
+#   master           -> the live site, www.olympiaholdings.com
+#   any other branch -> an unlisted preview at <branch-name>.olympia-builders-site.pages.dev
+#
+# Needs one repository secret, CLOUDFLARE_API_TOKEN: a Cloudflare key with the
+# "Cloudflare Pages: Edit" permission (Settings > Secrets and variables > Actions).
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Collect the site files
+        run: |
+          mkdir -p "$RUNNER_TEMP/site"
+          rsync -a --exclude='.git' --exclude='.github' --exclude='README*' ./ "$RUNNER_TEMP/site/"
+          echo "Files to publish: $(find "$RUNNER_TEMP/site" -type f | wc -l)"
+
+      - name: Publish to Cloudflare Pages
+        env:
+          SAVED_KEY: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: d99a2964baadff84dc05eae03cfb3ff9
+          WRANGLER_SEND_METRICS: "false"
+        run: |
+          # Use the key itself even if extra text was saved around it (spaces, line
+          # breaks, or the whole test command that Cloudflare shows next to a new key).
+          key="$(printf '%s' "$SAVED_KEY" | tr -d '\r' | grep -oE 'Bearer[[:space:]]+[A-Za-z0-9_-]{30,}' | tail -n 1 | sed -E 's/^Bearer[[:space:]]+//' || true)"
+          if [ -z "$key" ]; then
+            key="$(printf '%s' "$SAVED_KEY" | grep -oE '[A-Za-z0-9_-]{30,}' | awk 'length($0) > length(best) { best = $0 } END { print best }' || true)"
+          fi
+          if [ -z "$key" ]; then
+            echo "::error::No Cloudflare key was found in the CLOUDFLARE_API_TOKEN secret, so nothing was published."
+            exit 1
+          fi
+          echo "::add-mask::$key"
+          echo "Cloudflare key found (${#key} characters)."
+
+          CLOUDFLARE_API_TOKEN="$key" npx --yes wrangler@4.168.0 pages deploy "$RUNNER_TEMP/site" \
+            --project-name=olympia-builders-site \
+            --branch="$GITHUB_REF_NAME" \
+            --commit-hash="$GITHUB_SHA" \
+            --commit-message="$(git log -1 --pretty=%s)" \
+            --commit-dirty=true
