@@ -2856,6 +2856,64 @@ body.admin-bar .site-header {
    19. PORTFOLIO ADDITIONS (picture tags, galleries)
    ========================================================================== */
 
+/* Process: a plain numbered list instead of cards */
+.process-section .process-grid {
+    display: block;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.process-section .process-card,
+.process-section .process-card--wide {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    padding: 1.25rem 0;
+    background: none;
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    transform: none;
+}
+
+.process-section .process-card::before,
+.process-section .process-card::after {
+    display: none;
+}
+
+.process-section .process-step-head {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 0.9rem;
+    margin: 0;
+}
+
+.process-section .process-step-number {
+    font-size: 1rem;
+    min-width: 1rem;
+}
+
+.process-section .process-step-meta {
+    text-align: left;
+}
+
+.process-section .process-step-body {
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .process-section .process-card,
+    .process-section .process-card--wide {
+        grid-template-columns: 220px 1fr;
+        gap: 2rem;
+        align-items: baseline;
+    }
+}
+
 .logo-carousel-header {
     display: flex;
     flex-direction: column;
